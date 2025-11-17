@@ -3,10 +3,10 @@ package Interfaces;
 // Defines methods for Cache.
 public interface ICache {
     // Put new pair {key:value} to cache.
-    void put(String key, int value);
+    void put(String key, Integer value);
 
     // Get value by key.
-    int get(String key);
+    Integer get(String key);
 
     // Remove item in cache by key.
     void remove(String key);
