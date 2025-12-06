@@ -4,13 +4,14 @@ import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Iterator;
 
 import Interfaces.ICache;
 
-public class FIFOCache implements ICache {
+public class FIFOCache<K,V> implements ICache<K,V> {
     private final int capacity;
-    private final Map<String, Integer> dictMap;
-    private final LinkedList<String> queue;
+    private final Map<K, V> dictMap;
+    private final LinkedList<K> queue;
 
     public FIFOCache(int capacity) {
         this.capacity = capacity;
@@ -19,7 +20,7 @@ public class FIFOCache implements ICache {
     }
 
     @Override
-    public void put(String key, Integer value) {
+    public void put(K key, V value) {
         if (containsKey(key)) {
             dictMap.put(key, value);
 
@@ -29,7 +30,7 @@ public class FIFOCache implements ICache {
         } else {
             while (getSize() >= capacity) {
                 // remove the oldest element from queue and cache.
-                String oldestItemKey = queue.removeFirst();
+                K oldestItemKey = queue.removeFirst();
                 dictMap.remove(oldestItemKey);
             }
 
@@ -39,7 +40,7 @@ public class FIFOCache implements ICache {
     }
 
     @Override
-    public Integer get(String key) {
+    public V get(K key) {
         if (containsKey(key)){
             return dictMap.get(key);
         }
@@ -49,7 +50,7 @@ public class FIFOCache implements ICache {
     }
 
     @Override
-    public void remove(String key) {
+    public void remove(K key) {
         if (containsKey(key)) {
             dictMap.remove(key);
             queue.remove(key);
@@ -70,7 +71,12 @@ public class FIFOCache implements ICache {
     }
 
     @Override
-    public boolean containsKey(String key) {
+    public boolean containsKey(K key) {
         return dictMap.containsKey(key);
+    }
+
+    @Override
+    public Iterator<K> iterator() {
+        return queue.iterator();
     }
 }

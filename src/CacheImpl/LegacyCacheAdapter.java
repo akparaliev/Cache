@@ -1,18 +1,19 @@
 package CacheImpl;
 
 import Interfaces.ICache;
+import java.util.Iterator;
 
-public class LegacyCacheAdapter implements ICache {
-    private LegacyCache legacyCache;
+public class LegacyCacheAdapter<K,V> implements ICache<K,V> {
+    private LegacyCache<K,V> legacyCache;
     private int capacity;
 
     public LegacyCacheAdapter(int capacity) {
         this.capacity = capacity;
-        legacyCache = new LegacyCache();
+        legacyCache = new LegacyCache<K,V>();
     }
 
     @Override
-    public void put(String key, Integer value) {
+    public void put(K key, V value) {
         if (legacyCache.getSize() >= capacity) {
             System.out.println("Cache is full. Please, remove items.");
             return;
@@ -22,12 +23,12 @@ public class LegacyCacheAdapter implements ICache {
     }
 
     @Override
-    public Integer get(String key) {
+    public V get(K key) {
         return legacyCache.get(key);
     }
 
     @Override
-    public void remove(String key) {
+    public void remove(K key) {
         legacyCache.remove(key);
     }
 
@@ -42,8 +43,13 @@ public class LegacyCacheAdapter implements ICache {
     }
 
     @Override
-    public boolean containsKey(String key) {
+    public boolean containsKey(K key) {
         return legacyCache.containsKey(key);
     }
     
+    @Override
+    public Iterator<K> iterator() {
+          // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'iterator'");
+    }
 }

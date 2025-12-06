@@ -1,20 +1,20 @@
 package CacheImpl;
 
-public class LFUCacheItem {
-    private String key;
+public class LFUCacheItem<K,V> {
+    private K key;
     private int frequency;
-    private Integer value;
+    private V value;
 
     public LFUCacheItem(){}
-    public LFUCacheItem(String key, Integer value) {
+    public LFUCacheItem(K key, V value) {
         this.key = key;
         this.value = value;
         this.frequency = 1;
     }
 
     // defining Prototype.
-    public LFUCacheItem clone() {
-        LFUCacheItem clonedCacheItem = new LFUCacheItem();
+    public LFUCacheItem<K,V> clone() {
+        LFUCacheItem<K,V> clonedCacheItem = new LFUCacheItem<K,V>();
         clonedCacheItem.setKey(this.key);
         clonedCacheItem.setValue(this.value);
         clonedCacheItem.setFrequency(this.frequency);
@@ -22,18 +22,18 @@ public class LFUCacheItem {
         return clonedCacheItem;
     }
 
-    public String getKey() {
+    public K getKey() {
         return key;
     }
 
-    public void setKey(String key_) {
+    public void setKey(K key_) {
         this.key = key_;
     }
-    public Integer getValue() {
+    public V getValue() {
         return value;
     }
 
-    public void setValue(Integer value) {
+    public void setValue(V value) {
         this.value = value;
     }
 

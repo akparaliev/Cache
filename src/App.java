@@ -1,6 +1,9 @@
 import CacheImpl.CacheTimeMeasureDecorator;
 import CacheImpl.CacheTypeEnum;
 import CacheImpl.LegacyCacheAdapter;
+
+import java.util.Iterator;
+
 import CacheImpl.CacheDecorator;
 import Interfaces.ICache;
 
@@ -9,12 +12,33 @@ public class App {
        // testLFUwithFactory();
        // testFIFOwithFactory();
        // testLegacyCacheAdapter();
-       testCacheTimeMeasureDecorator();
+       // testCacheTimeMeasureDecorator();
+
+       // testFifoCacheIterator();
+       testGenerics1();
+    }
+
+     private static void testGenerics1() {
+        ICache<Integer,String> fifoCache = 
+            new CacheFactory<Integer,String>().createCacheInstance(CacheTypeEnum.FIFO, 9);
+        fifoCache.put(1, "Group 1");
+        fifoCache.put(3, "Group 333");
+    }
+
+    private static void testFifoCacheIterator() {
+        ICache<String, Integer> fifoCache = new CacheFactory<String, Integer>().createCacheInstance(CacheTypeEnum.FIFO, 9);
+        fifoCache.put("key1", 1);
+        fifoCache.put("key2", 123);
+
+        Iterator<String> fifoKeyIterator = fifoCache.iterator();
+        while(fifoKeyIterator.hasNext()) {
+            System.out.println(fifoCache.get(fifoKeyIterator.next()));
+        }
     }
 
     private static void testCacheTimeMeasureDecorator() {
-        ICache lfuCache = new CacheFactory().createCacheInstance(CacheTypeEnum.LFU, 10);
-        CacheDecorator decorator = new CacheTimeMeasureDecorator(lfuCache); // {item1: 1}, {item3: 2}
+        ICache<String, Integer> lfuCache = new CacheFactory<String, Integer>().createCacheInstance(CacheTypeEnum.LFU, 10);
+        CacheDecorator<String, Integer> decorator = new CacheTimeMeasureDecorator<String, Integer>(lfuCache); // {item1: 1}, {item3: 2}
         decorator.put("item1", 1); 
         decorator.put("item3", 2);
 
@@ -22,7 +46,7 @@ public class App {
     }
 
     private static void testLegacyCacheAdapter() {
-        ICache legacyCache = new LegacyCacheAdapter(4);
+        ICache<String, Integer> legacyCache = new LegacyCacheAdapter<String, Integer>(4);
         legacyCache.put("item 1", 1);
         legacyCache.put("item 2", 2);
         legacyCache.put("item 3", 3);
@@ -38,7 +62,7 @@ public class App {
 
 
     private static void testLFUwithFactory() {
-        ICache fifoCache = new CacheFactory().createCacheInstance(CacheTypeEnum.LFU, 10);
+        ICache<String, Integer> fifoCache = new CacheFactory<String, Integer>().createCacheInstance(CacheTypeEnum.LFU, 10);
         fifoCache.put("key1", 1);
         fifoCache.put("key2", 123);
         fifoCache.getSize(); // 2
@@ -50,7 +74,7 @@ public class App {
     }
 
     private static void testFIFOwithFactory() {
-        ICache fifoCache = new CacheFactory().createCacheInstance(CacheTypeEnum.FIFO, 9);
+        ICache<String, Integer> fifoCache = new CacheFactory<String, Integer>().createCacheInstance(CacheTypeEnum.FIFO, 9);
         fifoCache.put("key1", 1);
         fifoCache.put("key2", 123);
         fifoCache.getSize(); // 2
