@@ -8,7 +8,7 @@ import CacheImpl.CacheDecorator;
 import Interfaces.ICache;
 
 public class App {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
        // testLFUwithFactory();
        // testFIFOwithFactory();
        // testLegacyCacheAdapter();
@@ -23,6 +23,7 @@ public class App {
             new CacheFactory<Integer,String>().createCacheInstance(CacheTypeEnum.FIFO, 9);
         fifoCache.put(1, "Group 1");
         fifoCache.put(3, "Group 333");
+        System.out.println(fifoCache.get(3));
     }
 
     private static void testFifoCacheIterator() {

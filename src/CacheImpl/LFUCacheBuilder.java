@@ -4,7 +4,7 @@ public class LFUCacheBuilder<K,V> {
     private final LFUCache<K,V> lfuCache;
 
     public LFUCacheBuilder() {
-        lfuCache = new LFUCache<K,V>();
+        lfuCache = new LFUCache<>();
     }
 
     public LFUCacheBuilder<K,V> setCapacity(int capacity){
