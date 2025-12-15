@@ -8,7 +8,7 @@ import CacheImpl.CacheDecorator;
 import Interfaces.ICache;
 
 public class App {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
        // testLFUwithFactory();
        // testFIFOwithFactory();
        // testLegacyCacheAdapter();
